@@ -14,11 +14,12 @@ if __name__ == '__main__':
     cur = con.cursor()
 
 # переменная для создания таблицы 'test1'
-    create_table = '''CREATE TABLE TEST1
-        (ADMISSION INT PRIMARY KEY NOT NULL,
-        NAME TEXT NOT NULL,
-        VALUE CHAR(50),
-        VALUE2 CHAR(50))'''
+    create_table = '''CREATE TABLE TESTSCHEME01
+        (KEY BIGSERIAL,
+        ID BIGINT,
+        PURCHASENUMBER BIGINT,
+        HREF TEXT,
+        MAXPRICE REAL)'''
 
 # Блок для просмотра таблиц в базе и создания таблицы, если она отсутствует в списке
     select_tables = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'"
@@ -27,10 +28,13 @@ if __name__ == '__main__':
     button = False
     for i in tables:
         for j in i:
-            if 'test1' in j:
+            if 'testscheme01' in j:
                 button = True
     if button == False:
         cur.execute(create_table)
+    select_tables = "SELECT table_name FROM information_schema.tables WHERE table_schema='public'"
+    cur.execute(select_tables)
+    tables = cur.fetchall()
     print(tables)
     con.commit()
     con.close()
